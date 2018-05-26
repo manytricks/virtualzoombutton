@@ -45,7 +45,7 @@
 @end
 
 
-// PMVirtualZoomButtonWindow manages a PMVirtualZoomButtonElement as a private implementation detail and overrides some of a borderless window's default behavior.
+// PMVirtualZoomButtonWindow manages a PMVirtualZoomButtonElement as a private implementation detail and overrides some of a borderless window's default behavior. Also logs accessibility frame changes, unless you define DO_NOT_MONITOR_ACCESSIBILITY_FRAME.
 
 @interface PMVirtualZoomButtonWindow ()
 
@@ -92,13 +92,13 @@
 			self.mostRecentAccessibilityFrame = frame;
 			SEL logSelector = @selector(logAccessibilityFrame);
 			[NSObject cancelPreviousPerformRequestsWithTarget: self selector: logSelector object: nil];
-			[self performSelector: logSelector withObject: nil afterDelay: 0.1];	// -setAccessibilityFrame: is often sent several times when a third-party app, such as Moom, repositions and/or resizes a window (because those apps can only set position xor size at a given time via accessibility, and because they have to correct for interfering macOS automatisms), so we filter out some of the noise by only logging the new accessibility frame after a delay
+			[self performSelector: logSelector withObject: nil afterDelay: 0.1];	// -setAccessibilityFrame: is often sent several times when Moom repositions and/or resizes a window (because Moom can only set position xor size at a given time via accessibility, and because it has to correct for interfering macOS automatisms), so we filter out some of the noise by only logging the new accessibility frame after a delay
 			[super setAccessibilityFrame: frame];
 		}
 
 		- (void)logAccessibilityFrame {
-			NSRect frame = self.mostRecentAccessibilityFrame;	// the frame's x or y coordinate will sometimes be -0 even after rounding, so instead of using NSStringFromRect(), we convert to long to get prettier log messages
-			NSLog(@"new accessibility frame: {{x: %ld, y: %ld}, {w: %ld, h: %ld}}", (long)frame.origin.x, (long)frame.origin.y, (long)frame.size.width, (long)frame.size.height);
+			NSRect frame = self.mostRecentAccessibilityFrame;
+			NSLog(@"new accessibility frame: {{x: %ld, y: %ld}, {w: %ld, h: %ld}}", (long)frame.origin.x, (long)frame.origin.y, (long)frame.size.width, (long)frame.size.height);	// the frame's origin coordinate will sometimes be -0 even after rounding, so instead of using NSStringFromRect(), we convert to long to get prettier log messages
 		}
 
 	#endif
