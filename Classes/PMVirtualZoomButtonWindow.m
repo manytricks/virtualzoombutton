@@ -38,7 +38,7 @@
 	}
 
 	- (BOOL)accessibilityPerformPress {
-		[self.window performZoom: self];	// you might want to replace with something that mirrors your window's intended zooming behavior more closely
+		[self.window performZoom: self];	// you might want to replace this with something that mirrors your window's intended zooming behavior more closely
 		return YES;
 	}
 
