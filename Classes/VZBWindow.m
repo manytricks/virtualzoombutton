@@ -30,7 +30,7 @@
 	- (NSRect)accessibilityFrame {
 		NSRect frame = self.window.frame;
 		CGFloat zoomButtonSize = 20;
-		return NSMakeRect(frame.origin.x + frame.size.width - zoomButtonSize, frame.origin.y + frame.size.height - zoomButtonSize, zoomButtonSize, zoomButtonSize);	// arbitrary zoom button frame in global coordinates (if this were to match a Windows zoom button, it would probably have to take themes into account)
+		return NSMakeRect(frame.origin.x + frame.size.width - zoomButtonSize, frame.origin.y + frame.size.height - zoomButtonSize, zoomButtonSize, zoomButtonSize);	// arbitrary zoom button frame in global coordinates (in this case, it's the top right corner, but if the accessibility element were to actually match a Windows zoom button, it would probably have to take themes into account)
 	}
 
 	- (BOOL)isAccessibilityEnabled {
@@ -38,7 +38,7 @@
 	}
 
 	- (BOOL)accessibilityPerformPress {
-		[self.window performZoom: self];	// you might want to replace this with something that mirrors your window's intended zooming behavior more closely
+		[self.window zoom: self];
 		return YES;
 	}
 
