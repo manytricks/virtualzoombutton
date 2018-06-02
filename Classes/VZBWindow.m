@@ -30,7 +30,7 @@
 	- (NSRect)accessibilityFrame {
 		NSRect frame = self.window.frame;
 		CGFloat zoomButtonSize = 20;
-		return NSMakeRect(frame.origin.x + frame.size.width - zoomButtonSize, frame.origin.y + frame.size.height - zoomButtonSize, zoomButtonSize, zoomButtonSize);	// arbitrary zoom button frame in global coordinates (in this case, it's the top right corner, but if the accessibility element were to actually match a Windows zoom button, it would probably have to take themes into account)
+		return NSMakeRect(frame.origin.x + frame.size.width - zoomButtonSize, frame.origin.y + frame.size.height - zoomButtonSize, zoomButtonSize, zoomButtonSize);	// arbitrary zoom button frame in global coordinates (in this case, the top right corner, which of course is a nod to Windows, but if the accessibility element were to actually match an emulated Windows system's zoom button, it would probably have to take themes into account)
 	}
 
 	- (BOOL)isAccessibilityEnabled {
@@ -98,7 +98,7 @@
 
 		- (void)logAccessibilityFrame {
 			NSRect frame = self.mostRecentAccessibilityFrame;
-			NSLog(@"new accessibility frame: {{x: %ld, y: %ld}, {w: %ld, h: %ld}}", (long)frame.origin.x, (long)frame.origin.y, (long)frame.size.width, (long)frame.size.height);	// the frame's origin coordinate will sometimes be -0 even after rounding, so instead of using NSStringFromRect(), we convert to long to get prettier log messages
+			NSLog(@"new accessibility frame: {{x: %ld, y: %ld}, {w: %ld, h: %ld}}", (long)frame.origin.x, (long)frame.origin.y, (long)frame.size.width, (long)frame.size.height);	// the frame's origin coordinates will sometimes be -0 even after rounding, so instead of using NSStringFromRect(), we convert to long to get prettier log messages
 		}
 
 	#endif
@@ -108,10 +108,12 @@
 	}
 
 	#if !__has_feature(objc_arc)
+
 		- (void)dealloc {
 			[_zoomButtonElement release];
 			[super dealloc];
 		}
+
 	#endif
 
 @end
