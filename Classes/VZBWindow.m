@@ -1,15 +1,15 @@
-#import "PMVirtualZoomButtonWindow.h"
+#import "VZBWindow.h"
 
 
-// PMVirtualZoomButtonElement fakes a zoom button in terms of accessibility. It's not an actual button, and it's not on screen.
+// VZBAccessibilityElement fakes a zoom button in terms of accessibility. It's not an actual button, and it's not on screen.
 
-@interface PMVirtualZoomButtonElement: NSAccessibilityElement <NSAccessibilityButton>
+@interface VZBAccessibilityElement: NSAccessibilityElement <NSAccessibilityButton>
 
 	@property (nonatomic, assign) NSWindow *window;
 
 @end
 
-@implementation PMVirtualZoomButtonElement
+@implementation VZBAccessibilityElement
 
 	- (id)accessibilityParent {
 		return self.window;
@@ -45,11 +45,11 @@
 @end
 
 
-// PMVirtualZoomButtonWindow manages a PMVirtualZoomButtonElement as a private implementation detail and overrides some of a borderless window's default behavior. Also logs accessibility frame changes, unless you define DO_NOT_MONITOR_ACCESSIBILITY_FRAME.
+// VZBWindow manages a VZBAccessibilityElement as a private implementation detail and overrides some of a borderless window's default behavior. Also logs accessibility frame changes, unless you define DO_NOT_MONITOR_ACCESSIBILITY_FRAME.
 
-@interface PMVirtualZoomButtonWindow ()
+@interface VZBWindow ()
 
-	@property (nonatomic, retain) PMVirtualZoomButtonElement *zoomButtonElement;
+	@property (nonatomic, retain) VZBAccessibilityElement *zoomButtonElement;
 
 	#ifndef DO_NOT_MONITOR_ACCESSIBILITY_FRAME
 
@@ -59,11 +59,11 @@
 
 @end
 
-@implementation PMVirtualZoomButtonWindow
+@implementation VZBWindow
 
-	- (PMVirtualZoomButtonElement *)zoomButtonElement {
-		if (_zoomButtonElement==nil) {
-			_zoomButtonElement = [[PMVirtualZoomButtonElement alloc] init];
+	- (VZBAccessibilityElement *)zoomButtonElement {
+		if (!_zoomButtonElement) {
+			_zoomButtonElement = [[VZBAccessibilityElement alloc] init];
 			_zoomButtonElement.window = self;
 		}
 		return _zoomButtonElement;
@@ -71,7 +71,7 @@
 
 	- (NSArray *)accessibilityChildren {
 		NSArray *children = [super accessibilityChildren];
-		return ((children==nil) ? [NSArray arrayWithObject: self.zoomButtonElement] : [children arrayByAddingObject: self.zoomButtonElement]);
+		return ((children) ? [children arrayByAddingObject: self.zoomButtonElement] : [NSArray arrayWithObject: self.zoomButtonElement]);
 	}
 
 	- (id)accessibilityFullScreenButton {
@@ -107,9 +107,11 @@
 		return YES;	// makes the app set its AXFocusedWindow attribute correctly, which is what Moom uses to find the frontmost window (if your windows shouldn't be key windows, you'll have to set your NSApplication's accessibilityFocusedWindow property manually)
 	}
 
-	- (void)dealloc {
-		[_zoomButtonElement release];
-		[super dealloc];
-	}
+	#if !__has_feature(objc_arc)
+		- (void)dealloc {
+			[_zoomButtonElement release];
+			[super dealloc];
+		}
+	#endif
 
 @end
