@@ -104,7 +104,7 @@
 	#endif
 
 	- (BOOL)canBecomeKeyWindow {
-		return YES;	// makes the app set its AXFocusedWindow attribute correctly, which is what Moom uses to find the frontmost window (if your windows shouldn't be key windows, you'll have to make the app's accessibility element return a suitable focused window manually via NSApplication subclass)
+		return YES;	// makes the app set its AXFocusedWindow attribute correctly, which is what Moom uses to find the frontmost window (if your windows shouldn't be key windows, you'll have to set your NSApplication's accessibilityFocusedWindow property manually)
 	}
 
 	- (void)dealloc {
