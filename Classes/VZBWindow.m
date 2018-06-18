@@ -45,17 +45,11 @@
 @end
 
 
-// VZBWindow manages a VZBAccessibilityElement as a private implementation detail and overrides some of a borderless window's default behavior. Also logs accessibility frame changes, unless you define DO_NOT_MONITOR_ACCESSIBILITY_FRAME.
+// VZBWindow manages a VZBAccessibilityElement as a private implementation detail and overrides some of a borderless window's default behavior.
 
 @interface VZBWindow ()
 
 	@property (nonatomic, retain) VZBAccessibilityElement *zoomButtonElement;
-
-	#ifndef DO_NOT_MONITOR_ACCESSIBILITY_FRAME
-
-		@property (nonatomic, assign) NSRect mostRecentAccessibilityFrame;
-
-	#endif
 
 @end
 
@@ -85,23 +79,6 @@
 	- (NSString *)accessibilitySubrole {
 		return NSAccessibilityStandardWindowSubrole;	// not strictly necessary, but borderless windows are AXDialogs by default, and that might not be the best match for what your windows actually represent
 	}
-
-	#ifndef DO_NOT_MONITOR_ACCESSIBILITY_FRAME
-
-		- (void)setAccessibilityFrame: (NSRect)frame {
-			self.mostRecentAccessibilityFrame = frame;
-			SEL logSelector = @selector(logAccessibilityFrame);
-			[NSObject cancelPreviousPerformRequestsWithTarget: self selector: logSelector object: nil];
-			[self performSelector: logSelector withObject: nil afterDelay: 0.1];	// -setAccessibilityFrame: is often sent several times when Moom repositions and/or resizes a window (because Moom can only set position xor size at a given time via accessibility, and because it has to correct for interfering macOS automatisms), so we filter out some of the noise by only logging the new accessibility frame after a delay
-			[super setAccessibilityFrame: frame];
-		}
-
-		- (void)logAccessibilityFrame {
-			NSRect frame = self.mostRecentAccessibilityFrame;
-			NSLog(@"new accessibility frame: {{x: %ld, y: %ld}, {w: %ld, h: %ld}}", (long)frame.origin.x, (long)frame.origin.y, (long)frame.size.width, (long)frame.size.height);	// the frame's origin coordinates will sometimes be -0 even after rounding, so instead of using NSStringFromRect(), we convert to long to get prettier log messages
-		}
-
-	#endif
 
 	- (BOOL)canBecomeKeyWindow {
 		return YES;	// makes the app set its AXFocusedWindow attribute correctly, which is what Moom uses to find the frontmost window (if your windows shouldn't be key windows, you'll have to set your NSApplication's accessibilityFocusedWindow property manually)
