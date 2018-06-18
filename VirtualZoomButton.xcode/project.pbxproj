@@ -10,6 +10,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D046895B1662B8BD00AAAD26 /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = D046895A1662B8BD00AAAD26 /* Main.xib */; };
+		D06BE77920D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D06BE77820D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.m */; };
 		D08B03631FE3E5DF0078B412 /* VZBWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B03621FE3E5DF0078B412 /* VZBWindow.m */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +23,8 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.xml; fileEncoding = 4; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Virtual Zoom Button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Zoom Button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D046895A1662B8BD00AAAD26 /* Main.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Main.xib; path = Resources/Main.xib; sourceTree = "<group>"; };
+		D06BE77720D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VZBTemporarilyNonResizableContentWindow.h; path = Classes/VZBTemporarilyNonResizableContentWindow.h; sourceTree = "<group>"; };
+		D06BE77820D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VZBTemporarilyNonResizableContentWindow.m; path = Classes/VZBTemporarilyNonResizableContentWindow.m; sourceTree = "<group>"; };
 		D08B03611FE3E5DF0078B412 /* VZBWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VZBWindow.h; path = Classes/VZBWindow.h; sourceTree = "<group>"; };
 		D08B03621FE3E5DF0078B412 /* VZBWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VZBWindow.m; path = Classes/VZBWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +72,8 @@
 			children = (
 				D08B03611FE3E5DF0078B412 /* VZBWindow.h */,
 				D08B03621FE3E5DF0078B412 /* VZBWindow.m */,
+				D06BE77720D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.h */,
+				D06BE77820D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.m */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -168,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				D06BE77920D7B1DB00201771 /* VZBTemporarilyNonResizableContentWindow.m in Sources */,
 				D08B03631FE3E5DF0078B412 /* VZBWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
