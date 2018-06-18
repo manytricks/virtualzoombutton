@@ -19,7 +19,7 @@ static const NSTimeInterval VZBWindowFrameChangeResponseDelay = 1.0;	// in produ
 @end
 
 
-// VZBTemporarilyNonResizableContentWindow makes its content non-resizable temporarily depending on which values you choose for VZBWindowFrameChangeResponseDelay and VZBWindowContentResizeDefaultPolicy above.
+// VZBTemporarilyNonResizableContentWindow makes its content non-resizable temporarily as it changes its frame, depending on which values you choose for VZBWindowFrameChangeResponseDelay and VZBWindowContentResizeDefaultPolicy above.
 
 @interface VZBTemporarilyNonResizableContentWindow ()
 
